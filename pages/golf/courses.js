@@ -1,23 +1,13 @@
-import { groupBy, distinct } from '../../lib/utils';
-import getGoogleSheetRange from '../../lib/googleapi';
 import { useState } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
+import StyledLink from '../../components/link';
+import Layout from '../../components/layout';
+import CourseCard from '../../components/courseCard';
+import { getAllCourses } from '../../lib/golfapi';
 
 export async function getServerSideProps() {
 
-    const range = `Courses!A2:L`;
-    const data = await getGoogleSheetRange(process.env.SHEET_ID, range)
-    const holes = data.map((row) => (
-        {
-            course: row[0],
-            hole: row[1],
-            holeName: row[2],
-            yellowYards: row[6],
-            yellowPar: row[7],
-            yellowSi: row[8]
-        }
-    )).filter(hole => hole.hole !== '') //remove summary rows
+    const holes = await getAllCourses();
     return {
         props: {
             holes
@@ -31,38 +21,28 @@ export default function Courses({ holes }) {
     const handleCourseChange = (evt) => {
         setCourse(evt.target.value)
     }
-    const courses = distinct(holes.map(h => h.course))
+    const courses = Object.getOwnPropertyNames(holes);
     const [course, setCourse] = useState(courses[0])
-
 
     return (
         <>
             <Head>
                 <title>Golf courses</title>
             </Head>
-            <div>
-                <p>Choose a golf course</p>
-                <select onChange={handleCourseChange}>
-                    {courses.map(c => <option value={c}>{c}</option>)}
+            <Layout>
+                <div >
+                    <p>Choose a golf course</p>
+                    <select onChange={handleCourseChange}>
+                        {courses.map(c => <option value={c}>{c}</option>)}
 
-                </select>
-                {
-                    holes.map((hole, i) => (
-                        <div>
+                    </select>
+                    <StyledLink href={`/golf/${course}`} > View rounds at this course</StyledLink >
 
-                            {i % 9 === 0 && hole.course === course && <h1>{hole.course}</h1>}
-                            {hole.course === course && <div key={hole.holeName}>
-                                {hole.hole}.  {hole.holeName} - {hole.yellowYards}yds - {hole.yellowPar}
-                            </div>}
-                        </div>
-                    ))
-                }
-            </div>
-            <Link href={`/golf/${course}`} > View rounds at this course</Link >
+                    <h1 className='text-2xl'>{course} card</h1>
+                    <CourseCard holes={holes[course]} course={course} />
+                </div>
 
+            </Layout >
         </>
-
     )
-
-
 }
