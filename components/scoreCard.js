@@ -62,7 +62,7 @@ function Score({ score, par }) {
     }
 
     return (
-        <div className={`${color} bg-y border-b-2 text-center`}>
+        <div className={`${color} border-b-2 text-center`}>
             {score}
         </div>
     )

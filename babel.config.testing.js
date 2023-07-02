@@ -8,5 +8,10 @@ module.exports = {
                 },
             },
         ],
+        [
+            '@babel/preset-react',
+            {
+                "runtime": "automatic"
+            }]
     ],
 };

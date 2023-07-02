@@ -4,7 +4,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "dependencies": {
     "googleapis": "^118.0.0",
@@ -19,9 +19,12 @@
   "devDependencies": {
     "@babel/preset-env": "^7.22.2",
     "@babel/preset-react": "^7.22.3",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
     "autoprefixer": "^10.4.14",
     "babel-jest": "^29.5.0",
     "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "postcss": "^8.4.24",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "tailwindcss": "^3.3.2"
