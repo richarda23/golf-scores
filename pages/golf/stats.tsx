@@ -30,7 +30,13 @@ export async function getStaticProps() {
     }
 }
 
-const NumberCard = ({ title, value, details }) => {
+interface NumberCardProps {
+    title: string,
+    value: string,
+    details?: object
+}
+
+const NumberCard = ({ title, value, details }: NumberCardProps) => {
     return (
         <Card>
             <div className="border-b-2 text-xl  text-center ">{title}</div>
@@ -41,7 +47,6 @@ const NumberCard = ({ title, value, details }) => {
         </Card>
     )
 }
-
 
 
 const Card = ({ children }) => {

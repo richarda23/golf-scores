@@ -14,7 +14,10 @@ describe("util function tests", () => {
 
     describe('group by', () => {
         it('returns empty map for empty array', () => {
-            expect([...groupBy([]).keys()]).toHaveLength(0)
+            const empty: Array<{ a: string }> = []
+            const map = groupBy(empty, null)
+            const mapAssArray = map.keys()
+            expect([...mapAssArray]).toHaveLength(0)
         });
 
         const items = [

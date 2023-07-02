@@ -1,26 +1,27 @@
+import { CourseHoleDetails, RoundSummary } from "./domain";
 import getGoogleSheetRange from "./googleapi";
 import { distinct } from "./utils";
 const RoundSheet = 'Rounds'
 const CoursesSheet = 'Courses'
 const HoleScoreSheet = 'HoleScores'
-export const getAllCourseNames = async () => {
+export const getAllCourseNames = async (): Promise<string[]> => {
     const range = `${CoursesSheet}!A2:A`;
     const data = await getGoogleSheetRange(process.env.SHEET_ID, range)
     return distinct(data.map(d => d[0]))
 }
 
-const roundSummaryRowMapper = (row) => (
+const roundSummaryRowMapper = (row: string[]): RoundSummary => (
     {
-        roundId: row[0],
+        roundId: +row[0],
         course: row[1],
         courseNotes: row[2] ?? '',
         date: row[3],
-        score: row[4],
+        score: +row[4],
         playedWith: row[5] ?? 'Solo',
         weatherNotes: row[6] ?? '',
     });
 
-export const getRoundSummaryForCourse = async (course) => {
+export const getRoundSummaryForCourse = async (course: string): Promise<RoundSummary[]> => {
     const range = `${RoundSheet}!A2:G`;
     const data = await getGoogleSheetRange(process.env.SHEET_ID, range)
     const byCourse = data.filter(row => row[1] === course)
@@ -28,13 +29,13 @@ export const getRoundSummaryForCourse = async (course) => {
     return byCourse.map(roundSummaryRowMapper)
 }
 
-export const getRoundSummaries = async () => {
+export const getRoundSummaries = async (): Promise<RoundSummary[]> => {
     const range = `${RoundSheet}!A2:G`;
     const data = await getGoogleSheetRange(process.env.SHEET_ID, range)
     return data.map(roundSummaryRowMapper)
 }
 
-export const getRoundDetails = async (roundId) => {
+export const getRoundDetails = async (roundId: number) => {
     const range = `${HoleScoreSheet}!A2:H`;
     const data = await getGoogleSheetRange(process.env.SHEET_ID, range)
     const byRound = data.filter(row => row[0] === roundId)
@@ -52,14 +53,14 @@ export const getRoundDetails = async (roundId) => {
     })
 }
 
-export const getCourseByName = async (course) => {
+export const getCourseByName = async (course: string) => {
     const allCourses = await getAllCourses();
     return allCourses[course];
 }
-export const getAllCourses = async () => {
+export const getAllCourses = async (): Promise<Record<string, CourseHoleDetails[]>> => {
     const range = `Courses!A2:L`;
     const data = await getGoogleSheetRange(process.env.SHEET_ID, range)
-    const courseHoles = {}
+    const courseHoles: Record<string, CourseHoleDetails[]> = {}
     const courses = data.map((row) => (
         {
             course: row[0],

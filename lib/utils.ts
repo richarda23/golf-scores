@@ -1,5 +1,5 @@
-export const groupBy = (items, keyGetter) => {
-    const map = new Map();
+export const groupBy = <T>(items: Array<T>, keyGetter: (x: T) => string | number) => {
+    const map = new Map<string | number, T[]>();
     items.forEach(element => {
         const key = keyGetter(element)
         const coll = map.get(key)
@@ -12,11 +12,11 @@ export const groupBy = (items, keyGetter) => {
     return map;
 }
 
-export const distinct = items => {
+export const distinct = <T>(items: Array<T>): Array<T> => {
     return items.filter((c, i, arr) => arr.indexOf(c) === i);
 }
 
-export const mean = items => {
+export const mean = (items: number[]): number => {
     if (!items || items.length === 0) {
         return 0;
     }

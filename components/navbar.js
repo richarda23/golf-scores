@@ -13,11 +13,7 @@ export default function Navbar({ children }) {
                 <div className="cursor-pointer  text-4xl p-1 ml-auto active:bg-green-600">
                     &#9776;
                 </div>
-
-
             </div>
-
         </div>
-
     )
 }

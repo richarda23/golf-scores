@@ -4,6 +4,7 @@ import StyledLink from '../../components/link';
 import Layout from '../../components/layout';
 import CourseCard from '../../components/courseCard';
 import { getAllCourses } from '../../lib/golfapi';
+import { CourseHoleDetails } from '../../lib/domain';
 
 export async function getServerSideProps() {
 
@@ -15,8 +16,12 @@ export async function getServerSideProps() {
     }
 }
 
+interface CoursesProps {
+    holes: Record<string, CourseHoleDetails[]>
+}
 
-export default function Courses({ holes }) {
+
+export default function Courses({ holes }: CoursesProps) {
 
     const handleCourseChange = (evt) => {
         setCourse(evt.target.value)
