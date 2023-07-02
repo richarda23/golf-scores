@@ -22,3 +22,14 @@ export interface CourseHoleDetails {
     redPar: number,
     redSi: number
 }
+
+export interface RoundHoleDetails {
+    roundId: number,
+    course: string,
+    holeNumber: number,
+    score: number,
+    putts: number,
+    driveClub: string
+    notes: string
+    penaltiesInScore: number
+}

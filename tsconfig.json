@@ -24,7 +24,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/golf/[course].ts",
-    "pages/golf/[course].js"
+    "pages/golf/[course].js",
+    "pages/golf/details/roundId.test.tsx"
   ],
   "exclude": [
     "node_modules"

@@ -1,6 +1,4 @@
-/**
- * @jest-environment jsdom
- */
+
 import { render, screen } from '@testing-library/react';
 import Footer from './footer'
 import React from 'react';

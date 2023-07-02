@@ -1,4 +1,4 @@
-import { CourseHoleDetails, RoundSummary } from "./domain";
+import { CourseHoleDetails, RoundHoleDetails, RoundSummary } from "./domain";
 import getGoogleSheetRange from "./googleapi";
 import { distinct } from "./utils";
 const RoundSheet = 'Rounds'
@@ -35,7 +35,7 @@ export const getRoundSummaries = async (): Promise<RoundSummary[]> => {
     return data.map(roundSummaryRowMapper)
 }
 
-export const getRoundDetails = async (roundId: number) => {
+export const getRoundDetails = async (roundId: number): Promise<RoundHoleDetails[]> => {
     const range = `${HoleScoreSheet}!A2:H`;
     const data = await getGoogleSheetRange(process.env.SHEET_ID, range)
     const byRound = data.filter(row => row[0] === roundId)
@@ -53,7 +53,7 @@ export const getRoundDetails = async (roundId: number) => {
     })
 }
 
-export const getCourseByName = async (course: string) => {
+export const getCourseByName = async (course: string): Promise<CourseHoleDetails[]> => {
     const allCourses = await getAllCourses();
     return allCourses[course];
 }
