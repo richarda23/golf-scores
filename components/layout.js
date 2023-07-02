@@ -10,7 +10,7 @@ export const siteTitle = 'Golf scores';
 
 export default function Layout({ children }) {
     return (
-        <div className='container m-auto grid grid-cols-1 h-600 md:grid-cols-6 '>
+        <div className='container m-auto grid  h-900 grid-cols-6 '>
             <Navbar />
             <Content>{children}</Content>
             <Footer />

@@ -42,24 +42,11 @@ const NumberCard = ({ title, value, details }) => {
     )
 }
 
-const Toggle = () => {
-    const [col, setCol] = useState(0);
-    const colMappings = [
-        'text-red-300 hover:text-red-600',
-        'text-blue-300',
-        'text-orange-300',
-    ]
-    return (
-        <>
-            <button onClick={() => setCol(col => col + 1)}>Change colour </button>
-            <p className={colMappings[col % 3]}>Some text</p>
-        </>
-    )
-}
+
 
 const Card = ({ children }) => {
     return (
-        <div className="flex-1 flex-wrap flex-col text-r border-2  rounded-2xl p-2 border-red-500 bg-slate-200 flex-grow-1">
+        <div className="min-w-400px flex-wrap flex-col text-r border-2  rounded-2xl p-2 border-red-500 bg-slate-200 flex-grow-1">
             {children}
         </div>
     )
@@ -69,7 +56,6 @@ export default function Stats({ stats }) {
     return (
         <Layout>
             <div>
-                <Toggle />
                 <div className="flex flex-wrap gap-1 m-2">
                     <NumberCard value={stats.totalCourses} title="Total courses played" ></NumberCard>
                     <NumberCard value={stats.totalRounds} title="Total rounds played" ></NumberCard>

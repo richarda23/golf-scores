@@ -1,6 +1,6 @@
 export default function CourseCard({ holes, course }) {
     return (
-        <div className='container border-2  grid-cols-3  grid md:grid-cols-12'>
+        <div className='container border-2 border-cyan-100 border-dashed   grid grid-cols-12'>
             <div>Hole</div>
             <div className='col-span-2'>Name</div>
             <div>Par</div>

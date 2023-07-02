@@ -31,14 +31,14 @@ export default function Courses({ holes }) {
             </Head>
             <Layout>
                 <div >
-                    <p>Choose a golf course</p>
-                    <select onChange={handleCourseChange}>
+                    <p className='pb-2'>Choose a golf course</p>
+                    <select className='pb-2' onChange={handleCourseChange}>
                         {courses.map(c => <option value={c}>{c}</option>)}
 
                     </select>
                     <StyledLink href={`/golf/${course}`} > View rounds at this course</StyledLink >
 
-                    <h1 className='text-2xl'>{course} card</h1>
+                    <h1 className='text-2xl py-2'>{course} card</h1>
                     <CourseCard holes={holes[course]} course={course} />
                 </div>
 

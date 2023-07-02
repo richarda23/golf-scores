@@ -1,7 +1,8 @@
-import { getRoundDetails } from "../../../lib/golfapi"
+import { getRoundDetails, getCourseByName } from "../../../lib/golfapi"
 import { roundScore, puttScore } from "../../../lib/utils";
 import Layout from "../../../components/layout"
 import StyledLink from "../../../components/link";
+import ScoreCard from "../../../components/scoreCard";
 
 
 
@@ -9,15 +10,18 @@ export async function getServerSideProps({ params }) {
     console.log(params);
     const roundId = params.roundId
     const roundDetails = await getRoundDetails(roundId)
-    return { props: { details: roundDetails } }
+    const courseName = roundDetails[0].course;
+    const courseDetails = await getCourseByName(courseName);
+    console.log(courseDetails);
+    return { props: { details: roundDetails, course: courseDetails } }
 }
 
-export default function RoundDetails({ details }) {
+export default function RoundDetails({ details, course }) {
 
     if (details.length == 0) {
         return (
             <>
-                No hole with that id exists.
+                No round with that id exists.
                 <div>
                     <StyledLink href="/golf/courses">Back to courses</StyledLink>
                 </div>
@@ -33,12 +37,7 @@ export default function RoundDetails({ details }) {
                         {`Round ${details[0].roundId} played at ${details[0].course}`}
                     </div>
                     <div>
-                        {details.map(hole => (
-                            <div key={hole.holeNumber}>
-                                Score : {hole.score}, Putts: {hole.putts}
-                            </div>
-
-                        ))}
+                        <ScoreCard holeDetails={details} course={course} />
                     </div>
                     <div style={{ marginTop: "8px" }}>
                         Total score: {roundScore(details)} <br />
